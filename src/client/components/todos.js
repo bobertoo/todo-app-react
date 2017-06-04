@@ -29,7 +29,7 @@ const defaultProps = {
  * Todos component
  * @returns {ReactElement}
  */
-const Todos = ({ filterBy, todos, updateTodos }) => {
+const Todos = ({ filterBy, todos, updateTodos, putTodo }) => {
   /**
    * Base CSS class
    */
@@ -54,25 +54,6 @@ const Todos = ({ filterBy, todos, updateTodos }) => {
   }
 
   /**
-   * Callback function to replace todo with results of fetching the todo PUT endpoint
-   *
-   * @param  {object} json - Resulting JSON from fetch
-   */
-  const putTodo = json => {
-    const index = todos.findIndex(todo => {
-      return todo.id === json.id;
-    });
-
-    updateTodos(
-      [
-        ...todos.slice(0, index),
-        json,
-        ...todos.slice(index + 1),
-      ]
-    );
-  }
-
-  /**
    * Click handler for clicking on delete button
    * Deletes todo
    *
@@ -80,6 +61,12 @@ const Todos = ({ filterBy, todos, updateTodos }) => {
    */
   const onClickDelete = todo => {
     api('DELETE', todo, deleteTodo);
+  };
+
+  const onClickArchive = todo => {
+    const newTodo = {...todo, archive: true};
+
+    api('PUT', newTodo, putTodo);
   };
 
   /**
@@ -92,6 +79,7 @@ const Todos = ({ filterBy, todos, updateTodos }) => {
     const newTodo = Object.assign({}, todo);
     newTodo.status = todo.status === 'complete' ? 'active' : 'complete';
     newTodo.archive = false;
+
 
     api('PUT', newTodo, putTodo);
   }
@@ -115,14 +103,17 @@ const Todos = ({ filterBy, todos, updateTodos }) => {
           filtered = false;
       }
 
+
       return (
         <Todo
           key={todo.id}
           filtered={filtered}
           onClickDelete={onClickDelete.bind(this, todo)}
+          onClickArchive={onClickArchive.bind(this, todo)}
           onClickTodo={onClickTodo.bind(this, todo)}
           status={todo.status}
           text={todo.text}
+          archive={todos.archive}
         />
       );
     })

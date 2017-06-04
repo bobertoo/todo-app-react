@@ -50,7 +50,6 @@ export function getApiPromise(method, data) {
     if (response.status >= 400) {
       return response.json().then(err => Promise.reject(err.message));
     }
-
     return response.json();
   })
 };

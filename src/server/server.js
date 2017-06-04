@@ -14,6 +14,12 @@ var todos = [
   {"id": 2, "text": "Pick up groceries", "status": "complete"}
 ];
 
+function getTodoIndex(json) {
+  return todos.findIndex(todo =>
+    todo.id === json.id
+  );
+}
+
 app.get('/', function(req, res) {
   var bundle = `//${req.hostname}:8080/public/bundle.js`;
 
@@ -21,7 +27,8 @@ app.get('/', function(req, res) {
 });
 
 app.get('/todos', function(req, res) {
-  res.json(JSON.stringify(todos));
+  // res.json(JSON.stringify(todos));
+  res.json(todos);
 });
 
 app.get('/todos/:id', function(req, res) {
@@ -47,11 +54,19 @@ app.post('/todos', function(req, res) {
 });
 
 app.delete('/todos/:id', function(req, res) {
-  res.status(500).send({"message": "not implemented"});
+  var todo = req.body.data;
+  var todoIndex = getTodoIndex(todo);
+
+  todos = [...todos.slice(0, todoIndex), ...todos.slice(todoIndex + 1)]
+  res.json(todo);
 });
 
 app.put('/todos/:id', function(req, res) {
-  res.status(500).send({"message": "not implemented"});
+  var todo = req.body.data;
+  var todoIndex = getTodoIndex(todo);
+
+  todos = [...todos.slice(0, todoIndex), todo, ...todos.slice(todoIndex + 1)]
+  res.json(todo);
 });
 
 // Node server.
