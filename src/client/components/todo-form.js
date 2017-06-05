@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 const noop = () => {};
 
@@ -6,7 +6,7 @@ const noop = () => {};
  * TodoForm component
  * @class
  */
-class TodoForm extends React.Component {
+class TodoForm extends Component {
   /**
    * Base CSS class
    * @static

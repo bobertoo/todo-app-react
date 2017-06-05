@@ -64,7 +64,7 @@ const Todos = ({ filterBy, todos, updateTodos, putTodo }) => {
   };
 
   const onClickArchive = todo => {
-    const newTodo = {...todo, archive: true};
+    const newTodo = {...todo, status: 'archived'};
 
     api('PUT', newTodo, putTodo);
   };
@@ -76,12 +76,13 @@ const Todos = ({ filterBy, todos, updateTodos, putTodo }) => {
    * @param {object} todo - Todo object
    */
   const onClickTodo = todo => {
-    const newTodo = Object.assign({}, todo);
-    newTodo.status = todo.status === 'complete' ? 'active' : 'complete';
-    newTodo.archive = false;
+    if (todo.status !== 'archived') {
+      const newTodo = Object.assign({}, todo);
+      newTodo.status = todo.status === 'complete' ? 'active' : 'complete';
+      // newTodo.archive = false;
 
-
-    api('PUT', newTodo, putTodo);
+      api('PUT', newTodo, putTodo);
+    }
   }
 
   /**
@@ -94,13 +95,17 @@ const Todos = ({ filterBy, todos, updateTodos, putTodo }) => {
       let filtered;
       switch (filterBy) {
         case 'active':
-          filtered = todo.status === 'complete';
+          filtered = todo.status === 'complete' ||
+            todo.status === 'archived';
           break;
         case 'completed':
           filtered = todo.status !== 'complete';
           break;
+        case 'archived':
+          filtered = todo.status !== 'archived';
+          break;
         default:
-          filtered = false;
+          filtered = todo.status === 'archived';
       }
 
 

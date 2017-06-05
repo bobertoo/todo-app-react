@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 import { api, getApiPromise } from '../helpers/api';
@@ -13,7 +13,7 @@ import Todos from './todos';
  * TodosPage component
  * @class
  */
-class TodosPage extends React.Component {
+class TodosPage extends Component {
   /**
    * Base CSS class
    * @static
@@ -25,7 +25,7 @@ class TodosPage extends React.Component {
    * @static
    */
   static propTypes = {
-    params: React.PropTypes.object,
+    params: PropTypes.object,
   };
 
   /**
@@ -49,6 +49,7 @@ class TodosPage extends React.Component {
     this.updateTodos = this.updateTodos.bind(this);
     this.countActiveTodos = this.countActiveTodos.bind(this);
     this.completeAllTodos = this.completeAllTodos.bind(this);
+    this.archiveAllTodos = this.archiveAllTodos.bind(this);
     this.putTodo = this.putTodo.bind(this);
   }
 
@@ -134,19 +135,32 @@ class TodosPage extends React.Component {
    */
   countActiveTodos() {
     let activeTodos = this.state.todos.filter(todo =>
-      todo.status !== 'complete'
+      todo.status !== 'complete' &&
+        todo.status !== 'archived'
     )
     return activeTodos.length;
   }
 
   /**
-   * Add complete status to active todos
+   * Add complete status to all active todos
    */
   completeAllTodos() {
     let todos = this.state.todos.forEach(todo =>
-      todo.status === 'complete' ?
+      todo.status === 'complete' ||
+        todo.status === 'archived' ?
         todo :
         this.completeTodo({...todo, status: 'complete'})
+    )
+  }
+
+  /**
+   * Add archived status to all completed todos
+   */
+  archiveAllTodos() {
+    let todos = this.state.todos.forEach(todo =>
+      todo.status === 'complete' ?
+      this.completeTodo({...todo, status: 'archived'}) :
+      todo
     )
   }
 
@@ -157,7 +171,11 @@ class TodosPage extends React.Component {
   render() {
     return (
       <div className={this.baseCls}>
-        <Navbar filterBy={this.state.filterBy} onClickFilter={this.setFilterBy} />
+        <Navbar
+          filterBy={this.state.filterBy}
+          onClickFilter={this.setFilterBy}
+          archiveAllTodos={this.archiveAllTodos}
+        />
 
         <TodoIncompleteCount
           count={this.countActiveTodos()}
