@@ -1,12 +1,48 @@
 // Todo module.
 .todo {
   cursor: pointer;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+  border-bottom-color: $lightgray;
+  padding: 20px 0px 20px 0px;
+  color: $darkgray;
+
+  .todo-link {
+    display: inline;
+    font-size: 1.2em;
+  }
+
+  button {
+    border: none;
+  }
+
+  .deleteButton {
+    font-size: 1.2em;
+    color: $gray;
+    background: none;
+    border: none;
+    float: right;
+  }
+
+  .archiveButton {
+    margin-left: 10px;
+    color: white;
+    background-color: $green;
+    border-radius: 2px;
+    font-size: .7em;
+  }
 
   &--status-complete {
+    color: $gray ;
     text-decoration: line-through;
   }
 
   &--filtered {
     display: none;
+  }
+
+  .checkmark {
+    display: inline;
+    margin-right: 15px;
   }
 }

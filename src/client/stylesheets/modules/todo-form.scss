@@ -1,0 +1,22 @@
+// todo form module.
+.todo-form {
+  text-align: center;
+  form {
+    input {
+      padding: 10px;
+      width: 40%;
+      font-family: $yantramanav;
+      font-size: 1.1em;
+      color: $darkgray;
+      border-radius: 3px;
+      border-width: thin;
+      border-style:solid;
+      border-color: $lightgray;
+      background: linear-gradient($lightgray, transparent);
+      @include placeholder {
+        color: $gray;
+      font-family: $yantramanav;
+      }
+    }
+  }
+}

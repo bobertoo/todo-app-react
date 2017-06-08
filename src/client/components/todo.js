@@ -44,13 +44,13 @@ const Todo = ({ filtered, onClickDelete, onClickArchive, onClickTodo, status, te
     + (status === 'archived' ? ' todo--archived' : '')
     + (filtered ? ' todo--filtered' : '');
 
-  const archivable = status === 'complete' ? <Button text="Archive" onClick={onClickArchive} /> : null
+  const archivable = status === 'complete' ? <Button extraCls='archiveButton' text="Archive" onClick={onClickArchive} /> : null
 
   return (
     <li className={todoCls}>
       <TodoLink text={text} onClick={onClickTodo} />
       {archivable}
-      <Button text="Delete" onClick={onClickDelete} />
+      <Button extraCls='deleteButton' text="x" onClick={onClickDelete} />
     </li>
   );
 }

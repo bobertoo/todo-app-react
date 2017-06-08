@@ -8,12 +8,6 @@ const noop = () => {};
  */
 class TodoForm extends Component {
   /**
-   * Base CSS class
-   * @static
-   */
-  static baseCls = 'todo-form';
-
-  /**
    * Prop Types
    * @static
    */
@@ -66,13 +60,15 @@ class TodoForm extends Component {
    */
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          onChange={this.onChange}
-          placeholder="Add new todo..."
-          value={this.state.input}
-        />
-      </form>
+      <div className='todo-form'>
+        <form onSubmit={this.onSubmit}>
+          <input
+            onChange={this.onChange}
+            placeholder="Add new todo..."
+            value={this.state.input}
+          />
+        </form>
+      </div>
     );
   }
 }

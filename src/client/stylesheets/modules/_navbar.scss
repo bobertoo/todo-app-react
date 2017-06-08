@@ -1,10 +1,26 @@
 // Navbar module
 .navbar {
+  background-color: $lightgray;
+  padding: 10px 60px 10px 50px;
+
+  button {
+    float: right;
+    color: white;
+    background-color: $green;
+    border: none;
+    border-radius: 2px;
+    font-size: .7em;
+  }
+
   &__item {
+    margin: 10px;
     text-decoration: none;
+    color: $gray;
+    font-size: .8em;
   }
 
   &__item--active {
     font-weight: 700;
+    color: $darkgray;
   }
 }

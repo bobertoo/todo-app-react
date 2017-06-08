@@ -1,0 +1,14 @@
+// incomplete count module.
+.todoIncompleteCount {
+  margin: 20px 0px 20px 60px;
+  p {
+    display: inline;
+    margin-right: 5px;
+    color: $darkgray;
+  }
+  button {
+    color: $blue;
+    background: none;
+    border: none;
+  }
+}

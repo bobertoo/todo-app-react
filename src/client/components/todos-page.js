@@ -57,6 +57,7 @@ class TodosPage extends Component {
    * Component did mount
    */
   componentDidMount() {
+    console.log(this.props.params)
     api('GET', null, this.updateTodos);
   }
 
