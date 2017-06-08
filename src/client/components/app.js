@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Header from './header';
 
@@ -7,9 +7,9 @@ import Header from './header';
  * @private
  */
 const propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
   ]),
 };
 

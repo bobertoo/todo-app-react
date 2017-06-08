@@ -32,7 +32,7 @@ const TodoLink = ({ text, onClick }) => {
 
   return (
     <div className={baseCls} onClick={onClick}>
-      <div className='checkmark'>✔️</div>{text}
+      {text}
     </div>
   );
 };

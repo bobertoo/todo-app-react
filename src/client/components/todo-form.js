@@ -1,76 +1,47 @@
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
 
 const noop = () => {};
 
 /**
- * TodoForm component
- * @class
+ * Prop Types
+ * @private
  */
-class TodoForm extends Component {
-  /**
-   * Prop Types
-   * @static
-   */
-  static propTypes = {
-    onSubmit: React.PropTypes.func,
-  };
+const propTypes = {
+  onSubmit: React.PropTypes.func,
+  onChange: React.PropTypes.func,
+  input: PropTypes.string,
+};
 
-  static defaultProps = {
-    onSubmit: noop,
-  };
+/**
+ * Default Props
+ * @private
+ */
+const defaultProps = {
+  onSubmit: noop,
+  onChange: noop,
+  input: '',
+};
 
-  /**
-   * Constructor
-   * @constructor
-   */
-  constructor(props) {
-    super(props);
+/**
+* TodoForm component
+* @returns {ReactElement}
+*/
+const TodoForm = ({ onSubmit, onChange, input }) => {
 
-    this.state = { input: '' };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  /**
-   * On change handler for input field
-   * @param  {object} e - Event object
-   */
-  onChange(e) {
-    this.setState({
-      input: e.target.value,
-    });
-  }
-
-  /**
-   * On submit handler for submitting form
-   * @param  {object} e - Event object
-   */
-  onSubmit(e) {
-    e.preventDefault();
-
-    this.props.onSubmit(this.state.input);
-
-    this.setState({ input: '' });
-  }
-
-  /**
-   * Render
-   * @returns {ReactElement}
-   */
-  render() {
-    return (
-      <div className='todo-form'>
-        <form onSubmit={this.onSubmit}>
-          <input
-            onChange={this.onChange}
-            placeholder="Add new todo..."
-            value={this.state.input}
-          />
-        </form>
-      </div>
-    );
-  }
+  return (
+    <div className='todo-form'>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          placeholder="Add new todo..."
+          value={input}
+        />
+      </form>
+    </div>
+  );
 }
+
+TodoForm.propTypes = propTypes;
+TodoForm.defaultProps = defaultProps;
 
 export default TodoForm;

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+
 import Button from './button';
 
 const noop = () => {};
@@ -9,8 +10,9 @@ const noop = () => {};
  * @private
  */
 const propTypes = {
-  filterBy: React.PropTypes.string,
-  onClickFilter: React.PropTypes.func,
+  filterBy: PropTypes.string,
+  onClickFilter: PropTypes.func,
+  archiveAllTodos: PropTypes.func,
 };
 
 /**
@@ -20,6 +22,7 @@ const propTypes = {
 const defaultProps = {
   filterBy: '',
   onClickFilter: noop,
+  archiveAllTodos: noop,
 };
 
 /**

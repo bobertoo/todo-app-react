@@ -2,11 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 import { api, getApiPromise } from '../helpers/api';
-import Button from './button';
 import Navbar from './navbar';
 import TodoIncompleteCount from './todo-incomplete-count';
 import TodoForm from './todo-form';
-import TodoLink from './todo-link';
 import Todos from './todos';
 
 /**
@@ -40,6 +38,7 @@ class TodosPage extends Component {
     this.state = {
       todos: [],
       filterBy: props.params.filter,
+      input: '',
     };
 
     this.addTodo = this.addTodo.bind(this);
@@ -50,14 +49,15 @@ class TodosPage extends Component {
     this.countActiveTodos = this.countActiveTodos.bind(this);
     this.completeAllTodos = this.completeAllTodos.bind(this);
     this.archiveAllTodos = this.archiveAllTodos.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.putTodo = this.putTodo.bind(this);
   }
 
   /**
-   * Component did mount
+   * Grab todos when component mounts
    */
   componentDidMount() {
-    console.log(this.props.params)
     api('GET', null, this.updateTodos);
   }
 
@@ -67,7 +67,7 @@ class TodosPage extends Component {
    * @param  {string} text - Todo text
    */
   addTodo(text) {
-    if (!text) {
+    if (!text.trim()) {
       return;
     }
 
@@ -123,7 +123,7 @@ class TodosPage extends Component {
   }
 
   /**
-   * Update todos array state
+   * Grab todos array state
    *
    * @param  {Array} todos - Array of todo objects
    */
@@ -166,6 +166,26 @@ class TodosPage extends Component {
   }
 
   /**
+   * On change handler for input field
+   * @param  {object} e - Event object
+   */
+  onChange(e) {
+    this.setState({
+      input: e.target.value,
+    });
+  }
+
+  /**
+   * On submit handler for submitting form
+   * @param  {object} e - Event object
+   */
+  onSubmit(e) {
+    e.preventDefault();
+    this.addTodo(this.state.input);
+    this.setState({input: ''});
+  }
+
+  /**
    * Render
    * @returns {ReactElement}
    */
@@ -183,12 +203,12 @@ class TodosPage extends Component {
           completeAllTodos={this.completeAllTodos}
         />
 
-        <TodoForm onSubmit={this.addTodo} />
+        <TodoForm input={this.state.input} onSubmit={this.onSubmit} onChange={this.onChange} />
 
         <Todos
           filterBy={this.state.filterBy}
-          todos={this.state.todos}
           updateTodos={this.updateTodos}
+          todos={this.state.todos}
           putTodo={this.putTodo}
         />
       </div>

@@ -13,6 +13,7 @@ const propTypes = {
   filtered: React.PropTypes.bool,
   onClickDelete: React.PropTypes.func,
   onClickTodo: React.PropTypes.func,
+  onClickArchive: React.PropTypes.func,
   status: React.PropTypes.string,
   text: React.PropTypes.string,
 };
@@ -25,6 +26,7 @@ const defaultProps = {
   filtered: false,
   onClickDelete: noop,
   onClickTodo: noop,
+  onClickArchive: noop,
   status: '',
   text: '',
 };
@@ -44,10 +46,12 @@ const Todo = ({ filtered, onClickDelete, onClickArchive, onClickTodo, status, te
     + (status === 'archived' ? ' todo--archived' : '')
     + (filtered ? ' todo--filtered' : '');
 
-  const archivable = status === 'complete' ? <Button extraCls='archiveButton' text="Archive" onClick={onClickArchive} /> : null
+  const archivable = status === 'complete' ? <Button extraCls='archiveButton' text="Archive" onClick={onClickArchive} /> : ''
+  const checkmark = status === 'complete' ? <div className='checkmark'>✔️</div> : ''
 
   return (
     <li className={todoCls}>
+      {checkmark}
       <TodoLink text={text} onClick={onClickTodo} />
       {archivable}
       <Button extraCls='deleteButton' text="x" onClick={onClickDelete} />

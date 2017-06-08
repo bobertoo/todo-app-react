@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+
 import Button from './button';
 
 const noop = () => {};
@@ -23,23 +24,23 @@ const defaultProps = {
 
 /**
  * TodoIncompleteCount component
+ * @returns {ReactElement}
  */
 const TodoIncompleteCount = ({count, completeAllTodos}) => {
   /**
    * Base CSS class
-   * @returns {ReactElement}
    */
   const baseCls = 'todoIncompleteCount';
-  let countSection = ''
 
-  countSection = count !== 0 ? <Button onClick={completeAllTodos} text='Complete All' /> : ''
-    // countSection = <div>{count} tasks remaining</div>
+  /**
+   * Show Button {ReactElement} if count is > 0
+   */
+  const countSection = count !== 0 ? <Button onClick={completeAllTodos} text='Complete All' /> : ''
+
   return (
     <div className={baseCls}>
       <p>{count} task{count === 1 ? '' : 's'} remaining</p>
       {countSection}
-      {/* <div>{count}</div>
-      <Button onClick={completeAllTodos} text='complete all' /> */}
     </div>
   )
 };

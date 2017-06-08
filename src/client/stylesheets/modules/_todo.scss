@@ -32,17 +32,21 @@
     font-size: .7em;
   }
 
+  .checkmark {
+    display: inline;
+    margin-right: 10px;
+    font-size: .8em;
+  }
+
   &--status-complete {
-    color: $gray ;
-    text-decoration: line-through;
+    div.todo-link {
+      color: $gray ;
+      text-decoration: line-through;
+    }
   }
 
   &--filtered {
     display: none;
   }
 
-  .checkmark {
-    display: inline;
-    margin-right: 15px;
-  }
 }

@@ -14,6 +14,8 @@ var todos = [
   {"id": 2, "text": "Pick up groceries", "status": "complete"}
 ];
 
+var idGenerator = todos.length;
+
 function getTodoIndex(json) {
   return todos.findIndex(todo =>
     todo.id === json.id
@@ -22,7 +24,6 @@ function getTodoIndex(json) {
 
 
 app.get('/todos', function(req, res) {
-  // res.json(JSON.stringify(todos));
   res.json(todos);
 });
 
@@ -47,8 +48,8 @@ app.post('/todos', function(req, res) {
     return res.status(400).json({"message": "text is required"});
   }
 
-  var id = todos.length + 1;
-  var newTodo = { "id": id, "text": text, "status": "active" };
+  idGenerator += 1;
+  var newTodo = { "id": idGenerator, "text": text, "status": "active" };
   todos.push(newTodo);
 
   res.json(todos);

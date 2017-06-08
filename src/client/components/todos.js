@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import { api } from '../helpers/api';
 import Todo from './todo';
@@ -10,8 +10,8 @@ const noop = () => {};
  * @private
  */
 const propTypes = {
-  filterBy: React.PropTypes.string,
-  todos: React.PropTypes.arrayOf(React.PropTypes.object),
+  filterBy: PropTypes.string,
+  todos: PropTypes.arrayOf(React.PropTypes.object),
   updateTodos: React.PropTypes.func,
 };
 
@@ -40,18 +40,18 @@ const Todos = ({ filterBy, todos, updateTodos, putTodo }) => {
    *
    * @param  {object} json - Resulting JSON from fetch
    */
-  const deleteTodo = json => {
-    const index = todos.findIndex(todo => {
-      return todo.id === json.id;
-    });
+   const deleteTodo = json => {
+     const index = todos.findIndex(todo => {
+       return todo.id === json.id;
+     });
 
-    updateTodos(
-      [
-        ...todos.slice(0, index),
-        ...todos.slice(index + 1),
-      ]
-    );
-  }
+     updateTodos(
+       [
+         ...todos.slice(0, index),
+         ...todos.slice(index + 1),
+       ]
+     );
+   }
 
   /**
    * Click handler for clicking on delete button
@@ -63,6 +63,12 @@ const Todos = ({ filterBy, todos, updateTodos, putTodo }) => {
     api('DELETE', todo, deleteTodo);
   };
 
+  /**
+   * Click handler for clicking on archive button
+   * Archives completed todo
+   *
+   * @param {object} todo - Todo object
+   */
   const onClickArchive = todo => {
     const newTodo = {...todo, status: 'archived'};
 
@@ -79,7 +85,6 @@ const Todos = ({ filterBy, todos, updateTodos, putTodo }) => {
     if (todo.status !== 'archived') {
       const newTodo = Object.assign({}, todo);
       newTodo.status = todo.status === 'complete' ? 'active' : 'complete';
-      // newTodo.archive = false;
 
       api('PUT', newTodo, putTodo);
     }
@@ -107,7 +112,6 @@ const Todos = ({ filterBy, todos, updateTodos, putTodo }) => {
         default:
           filtered = todo.status === 'archived';
       }
-
 
       return (
         <Todo
